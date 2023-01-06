@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "sightlines"
+version = "0.1.0"
+description = ""
+authors = ["Toby McLaughlin <toby@jarpy.net>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.1"
+launchpad-py = "^0.9.1"
+pygame = "^2.1.2"
+
+[tool.poetry.scripts]
+sightlines = "sightlines.main:main"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
