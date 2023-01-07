@@ -10,11 +10,13 @@ def red(grid: Grid):
             for cell in row:
                 cell.set_rgb(127, 0, 0)
 
+
 def green(grid: Grid):
     while True:
         for row in grid.cells:
             for cell in row:
                 cell.set_rgb(0, 127, 0)
+
 
 def blue(grid: Grid):
     while True:
@@ -40,6 +42,7 @@ def smoketest():
 
     for thread in threads:
         thread.join()
+
 
 if __name__ == "__main__":
     smoketest()
