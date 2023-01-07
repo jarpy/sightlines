@@ -12,24 +12,18 @@ class Cell:
 
     # FIXME: Only supports the Launchpad Pro Mk1. Behavior on other models is undefined.
     def __init__(
-        self, x: int, y: int, hardware: LaunchpadBase, update_function: Callable = None
+        self,
+        x: int,
+        y: int,
+        hardware: LaunchpadBase,
     ) -> None:
         self.x = x
         self.y = y
         self.hardware = hardware
         # self.data: dict = {}
 
-        if update_function is None:
-            self.update_function = lambda self: self.set_rgb(0, 0, 0)
-        else:
-            self.update_function = update_function
-
     def __repr__(self) -> str:
         return f"Cell(x={self.x}, y={self.y})"
-
-    def update(self) -> None:
-        """Call the stored update function, passing in this cell as the argument."""
-        self.update_function(self)
 
     def set_rgb(self, red: int, green: int, blue: int) -> None:
         self.hardware.LedCtrlXY(
@@ -69,19 +63,6 @@ def smoketest():
             cell = Cell(x=x, y=y, hardware=hardware)
             cell.set_palette_color(cell_number)
             cell_number += 1
-            sleep(0.01)
-
-    # Demonstrating the "update" method, where each cell is given a function
-    # that is called by the Cell.update() method.
-    for y in range(10):
-        for x in range(10):
-            cell = Cell(
-                x=x,
-                y=y,
-                update_function=lambda cell: cell.set_rgb(cell.x * 10, 20, cell.y * 10),
-                hardware=hardware,
-            )
-            cell.update()
             sleep(0.01)
 
 
