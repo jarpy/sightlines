@@ -7,6 +7,11 @@ class Cell:
 
     It can be one of the 64 buttons in the main grid, but also be one of the
     auxiliary buttons on the edges.
+
+    The `x` and `y` coordinates are the true, physical coordinates on the whole
+    device, including any auxiliary buttons. They are not the local coordinates
+    of the main grid. The `Grid` class provides an abstraction for the main grid
+    coordinates.
     """
 
     # FIXME: Only supports the Launchpad Pro Mk1. Behavior on other models is undefined.

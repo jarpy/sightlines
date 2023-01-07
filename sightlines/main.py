@@ -17,8 +17,7 @@ def main():
         for cell in cells:
             cell.set_rgb(randint(0, 127), randint(0, 127), randint(0, 127))
 
-    runner = CellRunner(cells=grid[1], function=updater, interval=1.0)
-    runner.start()
+    CellRunner(cells=[grid[7][7]], function=updater, interval=1.0)
 
     while True:
         sleep(1)

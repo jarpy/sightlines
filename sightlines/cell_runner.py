@@ -24,9 +24,6 @@ class CellRunner:
         self.update_function = function
         self.interval = interval
         self.scheduler = BackgroundScheduler()
-
-    def start(self) -> None:
-        """Start the `CellRunner`."""
         self.scheduler.add_job(
             func=self.update_function,
             trigger="interval",
@@ -34,6 +31,9 @@ class CellRunner:
             args=[self.cells],
         )
         self.scheduler.start()
+
+    def __del__(self):
+        self.scheduler.shutdown()
 
 
 def smoketest():
@@ -47,12 +47,11 @@ def smoketest():
             cell.set_rgb(randint(0, 127), randint(0, 127), randint(0, 127))
 
     left_runner = CellRunner(cells=grid[0], function=random_colors, interval=0.5)
-    right_runner = CellRunner(cells=grid[7], function=random_colors, interval=1.0)
-
-    left_runner.start()
-    right_runner.start()
+    right_runner = CellRunner(cells=grid[7][3:6], function=random_colors, interval=1.0)
 
     sleep(5)
+    del left_runner
+    del right_runner
 
 
 if __name__ == "__main__":
