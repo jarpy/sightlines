@@ -57,6 +57,9 @@ def smoketest():
     grid[7][0].set_rgb(0, 0, 127)
     grid[7][7].set_rgb(64, 64, 0)
 
+    # Starting from the top corners, the next 2 cells diagonally towards the
+    # center should be pink, indicating that the linear addressing logic is
+    # correct.
     grid.get_cell_linear(9).set_palette_color(59)
     grid.get_cell_linear(14).set_palette_color(59)
 
