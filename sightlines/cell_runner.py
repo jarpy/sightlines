@@ -1,4 +1,3 @@
-from datetime import datetime
 from random import randint
 from time import sleep
 from typing import Callable
@@ -6,9 +5,7 @@ from sightlines.cell import Cell
 from sightlines.grid import Grid
 from apscheduler.schedulers.background import BackgroundScheduler  # type: ignore
 from launchpad_py.launchpad import LaunchpadPro  # type: ignore
-from apscheduler.triggers.combining import OrTrigger
-from apscheduler.triggers.interval import IntervalTrigger
-from apscheduler.triggers.date import DateTrigger
+
 
 class CellRunner:
     """A `CellRunner` is responsible updating `Cell`s based on some function.
@@ -21,18 +18,19 @@ class CellRunner:
         self,
         cells: list[Cell],
         function: Callable[[list[Cell]], None],
+        scheduler: BackgroundScheduler,
         interval: float = 1.0,
     ) -> None:
         self.cells = cells
         self.update_function = function
         self.interval = interval
-        self.scheduler = BackgroundScheduler()
+        self.scheduler = scheduler
 
         # Run the function once, immediately, to give the user some feedback.
         self.update_function(self.cells)
 
         # Now schedule it to run periodically.
-        self.scheduler.add_job(
+        self.job = self.scheduler.add_job(
             func=self.update_function,
             trigger="interval",
             seconds=self.interval,
@@ -40,12 +38,6 @@ class CellRunner:
             max_instances=1,
             coalesce=True,
         )
-        self.scheduler.start()
-
-    def __del__(self):
-        self.scheduler.shutdown()
-        for cell in self.cells:
-            cell.set_rgb(0, 0, 0)
 
 
 def smoketest():

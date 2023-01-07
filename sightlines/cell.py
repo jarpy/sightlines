@@ -1,5 +1,6 @@
 from time import sleep
 from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
+from colorsys import hls_to_rgb
 
 
 class Cell:
@@ -24,7 +25,7 @@ class Cell:
         self.x = x
         self.y = y
         self.hardware = hardware
-        # self.data: dict = {}
+        self.data: dict = {}
 
     def __repr__(self) -> str:
         return f"Cell(x={self.x}, y={self.y})"
@@ -34,8 +35,35 @@ class Cell:
             x=self.x, y=self.y, red=red, green=green, blue=blue, mode="pro"
         )
 
-    # def set_data(self, data: dict) -> None:
-    #     self.data = data
+    def set_hls(self, hue, luminance, saturation):
+        # Scale the inputs to the range 0-1.
+        hue = hue / 360
+        luminance = luminance / 127
+        saturation = saturation / 127
+
+        # Make the conversion.
+        red, green, blue = hls_to_rgb(hue, luminance, saturation)
+
+        # Scale the result back to 0-127, for consumption by the Launchpad.
+        red = int(red * 127)
+        green = int(green * 127)
+        blue = int(blue * 127)
+
+        self.set_rgb(red, green, blue)
+
+    def set_datum(self, key: str, value) -> None:
+        """Set a key/value pair in this cell's data store."""
+        self.data[key] = value
+
+    def get_datum(self, key: str):
+        """Retrieve a keyed value from this cell's data store.
+
+        Returns `None` if the key is not present.
+        """
+        if key in self.data:
+            return self.data[key]
+        else:
+            return None
 
     def set_palette_color(self, colorcode: int) -> None:
         self.hardware.LedCtrlXYByCode(
