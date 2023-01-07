@@ -6,6 +6,9 @@ from sightlines.grid import Grid
 from apscheduler.schedulers.background import BackgroundScheduler  # type: ignore
 from launchpad_py.launchpad import LaunchpadPro  # type: ignore
 
+scheduler = BackgroundScheduler()
+scheduler.start()
+
 
 class CellRunner:
     """A `CellRunner` is responsible updating `Cell`s based on some function.
@@ -18,19 +21,17 @@ class CellRunner:
         self,
         cells: list[Cell],
         function: Callable[[list[Cell]], None],
-        scheduler: BackgroundScheduler,
         interval: float = 1.0,
     ) -> None:
         self.cells = cells
         self.update_function = function
         self.interval = interval
-        self.scheduler = scheduler
 
         # Run the function once, immediately, to give the user some feedback.
         self.update_function(self.cells)
 
         # Now schedule it to run periodically.
-        self.job = self.scheduler.add_job(
+        self.job = scheduler.add_job(
             func=self.update_function,
             trigger="interval",
             seconds=self.interval,
