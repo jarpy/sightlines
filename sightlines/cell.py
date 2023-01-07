@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from time import sleep
 from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
 from colorsys import hls_to_rgb

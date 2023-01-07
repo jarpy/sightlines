@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from random import randint
 from time import sleep
 from typing import Callable

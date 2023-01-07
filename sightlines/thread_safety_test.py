@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """An experiment to see if we can safely use the Launchpad from multiple threads."""
 from threading import Thread
 from sightlines.grid import Grid

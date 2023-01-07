@@ -14,7 +14,7 @@ apscheduler = "^3.9.1.post1"
 pdpyras = "^4.5.2"
 
 [tool.poetry.scripts]
-sightlines = "sightlines.main:main"
+sightlines = "sightlines.sightlines:main"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"

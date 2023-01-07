@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from time import sleep
 
 from launchpad_py import LaunchpadPro  # type: ignore
@@ -16,7 +18,7 @@ def main():
     sleep(5)
 
     # The bottom left cell is a smoothly cycling rainbow.
-    # This shows that Sitelines is running.
+    # This shows that Sightlines is running.
     # Also, it's pretty and calming.
     CellRunner(
         cells=[grid[0][7]],
@@ -31,6 +33,7 @@ def main():
         interval=30.0,
     )
 
+    # The top 3 rows show the status of Buildkite builds.
     CellRunner(
         cells=grid.get_all_cells_linear()[0:24],
         function=update_buildkite,
@@ -39,3 +42,7 @@ def main():
 
     while True:
         sleep(1)
+
+
+if __name__ == "__main__":
+    main()

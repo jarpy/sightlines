@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from sightlines.cell import Cell
 from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
 
