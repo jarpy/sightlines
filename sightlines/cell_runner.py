@@ -1,19 +1,27 @@
+from random import randint
+from time import sleep
 from typing import Callable
 from sightlines.cell import Cell
+from sightlines.grid import Grid
 from apscheduler.schedulers.background import BackgroundScheduler  # type: ignore
+from launchpad_py.launchpad import LaunchpadPro  # type: ignore
 
 
 class CellRunner:
-    """A `CellRunner` is responsible updating `Cell`s based on some function."""
+    """A `CellRunner` is responsible updating `Cell`s based on some function.
+
+    Every `interval` seconds, it calls `function` with `cells` as the
+    argument.
+    """
 
     def __init__(
         self,
         cells: list[Cell],
-        update_function: Callable[[list[Cell]], None],
+        function: Callable[[list[Cell]], None],
         interval: float = 1.0,
     ) -> None:
         self.cells = cells
-        self.update_function = update_function
+        self.update_function = function
         self.interval = interval
         self.scheduler = BackgroundScheduler()
 
@@ -26,3 +34,26 @@ class CellRunner:
             args=[self.cells],
         )
         self.scheduler.start()
+
+
+def smoketest():
+    hardware = LaunchpadPro()
+    hardware.Open()
+    hardware.Reset()
+    grid = Grid(hardware=hardware)
+
+    def random_colors(cells: list[Cell]):
+        for cell in cells:
+            cell.set_rgb(randint(0, 127), randint(0, 127), randint(0, 127))
+
+    left_runner = CellRunner(cells=grid[0], function=random_colors, interval=0.5)
+    right_runner = CellRunner(cells=grid[7], function=random_colors, interval=1.0)
+
+    left_runner.start()
+    right_runner.start()
+
+    sleep(5)
+
+
+if __name__ == "__main__":
+    smoketest()
