@@ -205,6 +205,17 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "python-dateutil"
+version = "2.8.2"
+description = "Extensions to the standard Python datetime module"
+category = "main"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+
+[package.dependencies]
+six = ">=1.5"
+
+[[package]]
 name = "pytz"
 version = "2022.7"
 description = "World timezone definitions, modern and historical"
@@ -318,7 +329,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "25444bef3929d1eb487bb11bc59758f29a56ab96a627baecda4a15f681fcfc83"
+content-hash = "aa8185580fa1ae7b2dfb70da6d3e8f83966ea118c06e761c2cb2ef8275e375d3"
 
 [metadata.files]
 apscheduler = [
@@ -484,6 +495,10 @@ pygame = [
     {file = "pygame-2.1.2-pp37-pypy37_pp73-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:7fdb93b4282962c9a2ebf1af994ee698be823dd913218ed97a5f2fb372b10b66"},
     {file = "pygame-2.1.2-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1fddec8829e96424800c806582d73a5173b7d48946cccf7d035839ca09850db8"},
     {file = "pygame-2.1.2.tar.gz", hash = "sha256:d6d0eca28f886f0477cd0721ac688189155a587f2bb8eae740e52ca56c3ad23c"},
+]
+python-dateutil = [
+    {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
+    {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
 ]
 pytz = [
     {file = "pytz-2022.7-py2.py3-none-any.whl", hash = "sha256:93007def75ae22f7cd991c84e02d434876818661f8df9ad5df9e950ff4e52cfd"},
