@@ -15,7 +15,6 @@ def main():
     hardware.Open()
     hardware.Reset()
     grid = Grid(hardware=hardware)
-    sleep(5)
 
     # The bottom left cell is a smoothly cycling rainbow.
     # This shows that Sightlines is running.
