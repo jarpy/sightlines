@@ -157,6 +157,18 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "pdpyras"
+version = "4.5.2"
+description = "PagerDuty Python REST API Sessions"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+requests = "*"
+urllib3 = "*"
+
+[[package]]
 name = "platformdirs"
 version = "2.6.2"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
@@ -306,7 +318,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "187c30bb4f7c85027e704c2cd55f0d9ec48593fee747c837942da618b68692a1"
+content-hash = "25444bef3929d1eb487bb11bc59758f29a56ab96a627baecda4a15f681fcfc83"
 
 [metadata.files]
 apscheduler = [
@@ -397,6 +409,9 @@ mypy-extensions = [
 pathspec = [
     {file = "pathspec-0.10.3-py3-none-any.whl", hash = "sha256:3c95343af8b756205e2aba76e843ba9520a24dd84f68c22b9f93251507509dd6"},
     {file = "pathspec-0.10.3.tar.gz", hash = "sha256:56200de4077d9d0791465aa9095a01d421861e405b5096955051deefd697d6f6"},
+]
+pdpyras = [
+    {file = "pdpyras-4.5.2.tar.gz", hash = "sha256:27aa6720cf4996da7c1cb77dbc6b9b76fa39da203f04604eb852a4a235f4e86d"},
 ]
 platformdirs = [
     {file = "platformdirs-2.6.2-py3-none-any.whl", hash = "sha256:83c8f6d04389165de7c9b6f0c682439697887bca0aa2f1c87ef1826be3584490"},

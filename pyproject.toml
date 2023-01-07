@@ -11,6 +11,7 @@ requests = "^2.28.1"
 launchpad-py = "^0.9.1"
 pygame = "^2.1.2"
 apscheduler = "^3.9.1.post1"
+pdpyras = "^4.5.2"
 
 [tool.poetry.scripts]
 sightlines = "sightlines.main:main"
