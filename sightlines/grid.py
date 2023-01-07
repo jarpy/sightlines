@@ -32,6 +32,10 @@ class Grid:
         """
         return self[index % 8][int(index / 8)]
 
+    def get_all_cells_linear(self) -> list[Cell]:
+        """Get all cells in the grid in linear order."""
+        return [self.get_cell_linear(i) for i in range(64)]
+
     def __getitem__(self, column: int) -> list[Cell]:
         """Get a column of cells from the grid by its x coordinate.
 
