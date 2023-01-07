@@ -1,6 +1,5 @@
 from time import sleep
-from typing import Callable
-from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro
+from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
 
 
 class Cell:

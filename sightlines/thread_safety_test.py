@@ -1,7 +1,7 @@
 """An experiment to see if we can safely use the Launchpad from multiple threads."""
 from threading import Thread
 from sightlines.grid import Grid
-from launchpad_py.launchpad import LaunchpadPro
+from launchpad_py.launchpad import LaunchpadPro  # type: ignore
 
 
 def red(grid: Grid):

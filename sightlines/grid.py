@@ -1,5 +1,5 @@
 from sightlines.cell import Cell
-from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro
+from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
 
 
 class Grid:
