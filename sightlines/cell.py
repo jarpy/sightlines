@@ -3,7 +3,7 @@
 from time import sleep
 from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
 from colorsys import hls_to_rgb
-from typing import Callable
+from typing import Any, Callable
 
 
 class Cell:
@@ -24,7 +24,7 @@ class Cell:
         x: int,
         y: int,
         hardware: LaunchpadBase,
-        on_press: Callable[[object], None] = lambda self: print(f"No-op: {self}."),
+        on_press: Callable[[Any], Any] = lambda self: print(f"No-op: {self}."),
     ) -> None:
         self.x = x
         self.y = y
@@ -39,7 +39,7 @@ class Cell:
         """Call the `on_press_function` of this cell."""
         self.on_press_function(self)
 
-    def set_on_press(self, function: Callable[[object], None]) -> None:
+    def set_on_press(self, function: Callable[[Any], Any]) -> None:
         """Set the `on_press_function` of this cell."""
         self.on_press_function = function
 
