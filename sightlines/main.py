@@ -25,7 +25,7 @@ def handle_button_event():
         grid_x = global_x - 1
         grid_y = global_y - 1
         try:
-            cell = grid[grid_x][grid_y]
+            cell = grid[grid_x, grid_y]
         except IndexError:
             print("Button press outside of main grid, ignoring.")
             return
@@ -40,21 +40,21 @@ def main():
     # This shows that Sightlines is running.
     # Also, it's pretty and calming.
     CellRunner(
-        cells=[grid[0][7]],
+        cells=[grid[0, 7]],
         function=rainbow_cells,
         interval=0.1,
     )
 
     # The bottom right cell is a PagerDuty status indicator.
     CellRunner(
-        cells=[grid[7][7]],
+        cells=[grid[7, 7]],
         function=pagerduty_cells,
         interval=30.0,
     )
 
     # The top 3 rows show the status of Buildkite builds.
     CellRunner(
-        cells=grid.get_all_cells_linear()[0:24],
+        cells=grid[0:23],
         function=pipeline_cells,
         interval=60.0,
     )

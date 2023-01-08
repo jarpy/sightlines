@@ -8,23 +8,20 @@ from launchpad_py.launchpad import LaunchpadPro  # type: ignore
 
 def red(grid: Grid):
     while True:
-        for row in grid.cells:
-            for cell in row:
-                cell.set_rgb(127, 0, 0)
+        for cell in grid:
+            cell.set_rgb(127, 0, 0)
 
 
 def green(grid: Grid):
     while True:
-        for row in grid.cells:
-            for cell in row:
-                cell.set_rgb(0, 127, 0)
+        for cell in grid:
+            cell.set_rgb(0, 127, 0)
 
 
 def blue(grid: Grid):
     while True:
-        for row in grid.cells:
-            for cell in row:
-                cell.set_rgb(0, 0, 127)
+        for cell in grid:
+            cell.set_rgb(0, 0, 127)
 
 
 def smoketest():

@@ -2,6 +2,7 @@
 
 from sightlines.cell import Cell
 from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
+from typing import cast, Sequence, Union
 
 
 class Grid:
@@ -18,32 +19,39 @@ class Grid:
                 column.append(Cell(x + 1, y + 1, hardware=hardware))
             self.cells.append(column)
 
-    def get_cell(self, x: int, y: int) -> Cell:
-        """Get a cell from the grid by its x and y coordinates.
+    def __getitem__(self, index: int) -> Union[Cell, Sequence[Cell]]:
+        """Get a cell or sequence of cells from the grid.
 
-        The coordinates are 0-indexed, and the origin is north-west, so the
-        top-left cell is (0, 0).
+        Three operations are supported:
+
+          - Linear indexing: ``grid[0]`` returns the top-left cell.
+          - Cartesian indexing: ``grid[7, 7]`` returns the bottom-right cell.
+          - Slicing: ``grid[0:15]`` returns the top two rows of cells.
         """
-        return self.cells[x][y]
+        if isinstance(index, int):
+            return self.cells[index % 8][int(index / 8)]
 
-    def get_cell_linear(self, index: int) -> Cell:
-        """Get a cell from the grid by its linear order between 0 and 63.
+        elif isinstance(index, tuple):
+            if len(index) != 2:
+                raise ValueError("Cartesian indexing requires exactly 2 coordinates.")
+            x, y = index
+            return self.cells[x][y]
 
-        Counting starts at the top-left cell, and proceeds left-to-right, then
-        top-to-bottom (revealing the English cultural bias of the author).
+        elif isinstance(index, slice):
+            pointer = index.start
+            step = index.step or 1
+            cells: list[Cell] = []
+            while pointer <= index.stop:
+                cells.append(cast(Cell, self[pointer]))
+                pointer += step
+            return cells
+
+    def __iter__(self):
+        """Make the `Grid` iterable.
+
+        Enables ``for cell in grid``, ``list(grid)``.
         """
-        return self[index % 8][int(index / 8)]
-
-    def get_all_cells_linear(self) -> list[Cell]:
-        """Get all cells in the grid in linear order."""
-        return [self.get_cell_linear(i) for i in range(64)]
-
-    def __getitem__(self, column: int) -> list[Cell]:
-        """Get a column of cells from the grid by its x coordinate.
-
-        Enables addressing cells with matrix notation, like "grid[3][7]".
-        """
-        return self.cells[column]
+        return iter(self[0:63])
 
 
 def smoketest():
@@ -58,16 +66,28 @@ def smoketest():
             cell.set_rgb(30, 30, 30)
 
     # The corners of the grid should be different colors.
-    grid.get_cell(0, 0).set_rgb(172, 0, 0)
-    grid.get_cell(0, 7).set_rgb(0, 127, 0)
-    grid[7][0].set_rgb(0, 0, 127)
-    grid[7][7].set_rgb(64, 64, 0)
+    # This demonstrates cartesian addressing.
+    grid[0, 0].set_rgb(172, 0, 0)
+    grid[0, 7].set_rgb(0, 127, 0)
+    grid[7, 0].set_rgb(0, 0, 127)
+    grid[7, 7].set_rgb(64, 64, 0)
 
     # Starting from the top corners, the next 2 cells diagonally towards the
     # center should be pink, indicating that the linear addressing logic is
     # correct.
-    grid.get_cell_linear(9).set_palette_color(59)
-    grid.get_cell_linear(14).set_palette_color(59)
+    grid[9].set_palette_color(59)
+    grid[14].set_palette_color(59)
+
+    # Finally, diagonal stripes should be visible in the middle of the device.
+    # This demonstrates sliced addressing, including the step parameter.
+    for cell in grid[16:47:3]:
+        cell.set_palette_color(4)
+
+    for cell in grid[17:47:3]:
+        cell.set_palette_color(9)
+
+    for cell in grid[18:47:3]:
+        cell.set_palette_color(20)
 
 
 if __name__ == "__main__":

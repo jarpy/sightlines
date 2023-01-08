@@ -53,12 +53,10 @@ def smoketest():
         for cell in cells:
             cell.set_rgb(randint(0, 127), randint(0, 127), randint(0, 127))
 
-    left_runner = CellRunner(cells=grid[0], function=random_colors, interval=0.5)
-    right_runner = CellRunner(cells=grid[7][3:6], function=random_colors, interval=1.0)
+    CellRunner(cells=grid[0:23], function=random_colors, interval=0.5)
+    CellRunner(cells=grid[40:63], function=random_colors, interval=1.0)
 
     sleep(5)
-    del left_runner
-    del right_runner
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 from os import environ
 from sightlines.cell import Cell
 from pdpyras import APISession as PagerDutySession  # type: ignore
-
+from typing import Sequence
 
 pagerduty = PagerDutySession(environ["PAGERDUTY_TOKEN"])
 
@@ -15,7 +15,7 @@ def get_incidents():
     )
 
 
-def pagerduty_cells(cells: list[Cell]):
+def pagerduty_cells(cells: Sequence[Cell]):
     """A cell function that displays PagerDuty incident status.
 
     Note that only one status is displayed, so it's really only worth assigning

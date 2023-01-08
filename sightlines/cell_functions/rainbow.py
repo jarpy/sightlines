@@ -4,9 +4,10 @@
 from launchpad_py.launchpad import LaunchpadPro  # type: ignore
 from sightlines.cell import Cell
 from sightlines.grid import Grid
+from typing import Sequence
 
 
-def rainbow_cells(cells: list[Cell]):
+def rainbow_cells(cells: Sequence[Cell]):
     """A cell function that makes rainbows.
 
     Each time the function is called, the hue of the cells shifts slightly. Call
@@ -33,7 +34,7 @@ def smoketest():
     grid = Grid(hardware=hardware)
 
     while True:
-        rainbow_cells(grid.get_all_cells_linear())
+        rainbow_cells(grid)
 
 
 if __name__ == "__main__":

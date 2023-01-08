@@ -6,6 +6,7 @@ from os import environ
 from textwrap import dedent
 from time import time
 from sightlines.cell import Cell
+from typing import Sequence
 
 api_token = environ["BUILDKITE_API_TOKEN_SIGHTLINES"]
 graphql_url = "https://graphql.buildkite.com/v1"
@@ -70,7 +71,7 @@ def get_builds_by_pipeline_slug(organization: str, tag: str):
     return builds_by_pipeline_slug
 
 
-def pipeline_cells(cells: list[Cell]):
+def pipeline_cells(cells: Sequence[Cell]):
     """Update cells with the status of Buildkite pipelines."""
 
     # Paint the whole area under our control grey. This shows the operator where

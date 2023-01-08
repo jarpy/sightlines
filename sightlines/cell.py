@@ -82,6 +82,10 @@ class Cell:
         self.hardware.LedCtrlXYByCode(
             x=self.x, y=self.y, colorcode=colorcode, mode="pro"
         )
+        # In practice, this method seems to be sensitive to aggressive timing.
+        # We don't see this with the RGB method. Anyway, a little sleep does a
+        # world of good.
+        sleep(0.001)
 
     # def set_pulse(self, colorcode: int) -> None:
     #     self.hardware.LedCtrlPulseXYByCode(x=self.x, y=self.y, colorcode=colorcode)
