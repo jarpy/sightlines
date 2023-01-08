@@ -2,7 +2,7 @@
 
 from random import randint
 from time import sleep
-from typing import Callable
+from typing import Callable, Sequence
 from sightlines.cell import Cell
 from sightlines.grid import Grid
 from apscheduler.schedulers.background import BackgroundScheduler  # type: ignore
@@ -13,7 +13,7 @@ scheduler.start()
 
 
 class CellRunner:
-    """A `CellRunner` is responsible updating `Cell`s based on some function.
+    """A `CellRunner` is responsible for updating `Cell`s based on some function.
 
     Every `interval` seconds, it calls `function` with `cells` as the
     argument.
@@ -21,8 +21,8 @@ class CellRunner:
 
     def __init__(
         self,
-        cells: list[Cell],
-        function: Callable[[list[Cell]], None],
+        cells: Sequence[Cell],
+        function: Callable[[Sequence[Cell]], None],
         interval: float = 1.0,
     ) -> None:
         self.cells = cells
@@ -49,7 +49,7 @@ def smoketest():
     hardware.Reset()
     grid = Grid(hardware=hardware)
 
-    def random_colors(cells: list[Cell]):
+    def random_colors(cells: Sequence[Cell]):
         for cell in cells:
             cell.set_rgb(randint(0, 127), randint(0, 127), randint(0, 127))
 
