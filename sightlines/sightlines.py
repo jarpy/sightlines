@@ -13,26 +13,23 @@ hardware = LaunchpadPro()
 grid = Grid(hardware=hardware)
 
 
-def poll_buttons():
-    while True:
-        button = hardware.ButtonStateXY(mode="pro")
-        if button:
-            global_x, global_y, velocity = button
-            if velocity == 0:
-                # This is a button release event, we only care about presses.
-                continue
+def handle_button_event():
+    button = hardware.ButtonStateXY(mode="pro")
+    if button:
+        global_x, global_y, velocity = button
+        if velocity == 0:
+            # This is a button release event, we only care about presses.
+            return
 
-            # Map the global button coordinates to the main grid coordinates.
-            grid_x = global_x - 1
-            grid_y = global_y - 1
-            try:
-                cell = grid[grid_x][grid_y]
-            except IndexError:
-                print("Button press outside of main grid, ignoring.")
-                continue
-            cell.on_press()
-
-        sleep(0.01)
+        # Map the global button coordinates to the main grid coordinates.
+        grid_x = global_x - 1
+        grid_y = global_y - 1
+        try:
+            cell = grid[grid_x][grid_y]
+        except IndexError:
+            print("Button press outside of main grid, ignoring.")
+            return
+        cell.on_press()
 
 
 def main():
@@ -62,7 +59,9 @@ def main():
         interval=60.0,
     )
 
-    poll_buttons()
+    while True:
+        handle_button_event()
+        sleep(0.01)
 
 
 if __name__ == "__main__":
