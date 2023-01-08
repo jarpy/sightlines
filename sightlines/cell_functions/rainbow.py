@@ -10,7 +10,8 @@ def rainbow_cells(cells: list[Cell]):
     """A cell function that makes rainbows.
 
     Each time the function is called, the hue of the cells shifts slightly. Call
-    it in a tight loop for a nice animation.
+    it in a tight loop for a nice animation. The initial hue of each cell is
+    different, so more cells results in more fabulousness.
     """
     for index, cell in enumerate(cells):
         current_hue = cell.get_datum("hue")
@@ -25,6 +26,7 @@ def rainbow_cells(cells: list[Cell]):
 
 
 def smoketest():
+    """Engage maximum fabulous."""
     hardware = LaunchpadPro()
     hardware.Open()
     hardware.Reset()

@@ -16,7 +16,7 @@ def get_incidents():
 
 
 def pagerduty_cells(cells: list[Cell]):
-    """A cell function that displays PagerDuty incidents status.
+    """A cell function that displays PagerDuty incident status.
 
     Note that only one status is displayed, so it's really only worth assigning
     this function to a single cell. However, the function signature still takes
