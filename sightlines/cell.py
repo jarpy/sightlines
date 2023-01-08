@@ -3,6 +3,7 @@
 from time import sleep
 from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
 from colorsys import hls_to_rgb
+from typing import Callable
 
 
 class Cell:
@@ -23,14 +24,24 @@ class Cell:
         x: int,
         y: int,
         hardware: LaunchpadBase,
+        on_press: Callable[[object], None] = lambda self: print(f"No-op: {self}."),
     ) -> None:
         self.x = x
         self.y = y
         self.hardware = hardware
         self.data: dict = {}
+        self.on_press_function = on_press
 
     def __repr__(self) -> str:
         return f"Cell(x={self.x}, y={self.y})"
+
+    def on_press(self) -> None:
+        """Call the `on_press_function` of this cell."""
+        self.on_press_function(self)
+
+    def set_on_press(self, function: Callable[[object], None]) -> None:
+        """Set the `on_press_function` of this cell."""
+        self.on_press_function = function
 
     def set_rgb(self, red: int, green: int, blue: int) -> None:
         self.hardware.LedCtrlXY(

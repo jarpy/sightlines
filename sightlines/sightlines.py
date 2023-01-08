@@ -9,12 +9,35 @@ from sightlines.updaters.pagerduty import update_pagerduty
 from sightlines.updaters.buildkite import update_buildkite
 from sightlines.updaters.rainbow import rainbow
 
+hardware = LaunchpadPro()
+grid = Grid(hardware=hardware)
+
+
+def poll_buttons():
+    while True:
+        button = hardware.ButtonStateXY(mode="pro")
+        if button:
+            global_x, global_y, velocity = button
+            if velocity == 0:
+                # This is a button release event, we only care about presses.
+                continue
+
+            # Map the global button coordinates to the main grid coordinates.
+            grid_x = global_x - 1
+            grid_y = global_y - 1
+            try:
+                cell = grid[grid_x][grid_y]
+            except IndexError:
+                print("Button press outside of main grid, ignoring.")
+                continue
+            cell.on_press()
+
+        sleep(0.01)
+
 
 def main():
-    hardware = LaunchpadPro()
     hardware.Open()
     hardware.Reset()
-    grid = Grid(hardware=hardware)
 
     # The bottom left cell is a smoothly cycling rainbow.
     # This shows that Sightlines is running.
@@ -39,9 +62,7 @@ def main():
         interval=60.0,
     )
 
-    while True:
-        sleep(1)
-
+    poll_buttons()
 
 if __name__ == "__main__":
     main()
