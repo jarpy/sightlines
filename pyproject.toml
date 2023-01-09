@@ -15,7 +15,8 @@ pdpyras = "^4.5.2"
 python-dateutil = "^2.8.2"
 
 [tool.poetry.scripts]
-sightlines = "sightlines.main:main"
+sightlines-buildkite = "apps.buildkite:main"
+sightlines-rainbow = "apps.rainbow:main"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"

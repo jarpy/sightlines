@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 
+"""A Sightlines app that displays status from Buildkite (and PagerDuty)."""
+
 from time import sleep
 
 from launchpad_py import LaunchpadPro  # type: ignore
-from sightlines.grid import Grid
-from sightlines.cell_runner import CellRunner
-from sightlines.cell_functions.pagerduty import pagerduty_cells
+
 from sightlines.cell_functions.buildkite import pipeline_cells
+from sightlines.cell_functions.pagerduty import pagerduty_cells
 from sightlines.cell_functions.rainbow import rainbow_cells
+from sightlines.cell_runner import CellRunner
+from sightlines.grid import Grid
 
 launchpad = LaunchpadPro()
 grid = Grid(hardware=launchpad)
