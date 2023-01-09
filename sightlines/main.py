@@ -9,32 +9,13 @@ from sightlines.cell_functions.pagerduty import pagerduty_cells
 from sightlines.cell_functions.buildkite import pipeline_cells
 from sightlines.cell_functions.rainbow import rainbow_cells
 
-hardware = LaunchpadPro()
-grid = Grid(hardware=hardware)
-
-
-def handle_button_event():
-    button = hardware.ButtonStateXY(mode="pro")
-    if button:
-        global_x, global_y, velocity = button
-        if velocity == 0:
-            # This is a button release event, we only care about presses.
-            return
-
-        # Map the global button coordinates to the main grid coordinates.
-        grid_x = global_x - 1
-        grid_y = global_y - 1
-        try:
-            cell = grid[grid_x, grid_y]
-        except IndexError:
-            print("Button press outside of main grid, ignoring.")
-            return
-        cell.on_press()
+launchpad = LaunchpadPro()
+grid = Grid(hardware=launchpad)
 
 
 def main():
-    hardware.Open()
-    hardware.Reset()
+    launchpad.Open()
+    launchpad.Reset()
 
     # The bottom left cell is a smoothly cycling rainbow.
     # This shows that Sightlines is running.
@@ -60,7 +41,7 @@ def main():
     )
 
     while True:
-        handle_button_event()
+        grid.handle_button_event()
         sleep(0.01)
 
 

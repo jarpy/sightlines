@@ -9,7 +9,6 @@ from apscheduler.schedulers.background import BackgroundScheduler  # type: ignor
 from launchpad_py.launchpad import LaunchpadPro  # type: ignore
 
 scheduler = BackgroundScheduler()
-scheduler.start()
 
 
 class CellRunner:
@@ -28,6 +27,8 @@ class CellRunner:
         self.cells = cells
         self.update_function = function
         self.interval = interval
+        if not scheduler.running:
+            scheduler.start()
 
         # Run the function once, immediately, to give the user some feedback.
         self.update_function(self.cells)
