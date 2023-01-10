@@ -22,9 +22,32 @@ Individual cells are not much fun. The `Grid` class collect all the cells in the
 
 #### Linear Addressing
 
+All the grid cells are available for lookup by linear index. They are numbered 0 to 63, starting top-left and proceeding left-to right, then top to bottom (revealing the cultural bias of the author).
+
+```python
+grid = Grid()
+top_left_cell = grid[0]
+bottom_right_cell = grid[63]
+```
+
 #### Cartesian Addressing
 
+You can use x/y coordinates to get a cell in a more spatial way.
+
+```python
+grid = Grid()
+top_left_cell = grid[0, 0]
+bottom_right_cell = grid[7, 7]
+```
+
 #### Slicing
+
+Finally, you can use Python's slicing syntax.
+
+```python
+grid = Grid()
+second_row = grid[8:15]
+```
 
 ### CellRunner
 
@@ -40,6 +63,7 @@ CellRunner()
 
 ### Cell Functions
 
+When you press a cell on the Launchpad, it can do... stuff. 
 
 [Novation Launchpad]: https://novationmusic.com/en/launch
 [`launchpad.py`]: https://github.com/FMMT666/launchpad.py
