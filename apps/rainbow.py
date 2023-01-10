@@ -10,13 +10,9 @@ from sightlines.cell_functions.rainbow import rainbow_cells
 from sightlines.cell_runner import CellRunner
 from sightlines.grid import Grid
 
-launchpad = LaunchpadPro()
-grid = Grid(hardware=launchpad)
-
 
 def main():
-    launchpad.Open()
-    launchpad.Reset()
+    grid = Grid(hardware=LaunchpadPro())
 
     CellRunner(cells=grid, function=rainbow_cells, interval=0.1)
 

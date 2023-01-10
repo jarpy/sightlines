@@ -9,16 +9,34 @@ class Grid:
     """A collection of Cells that make up the main Launchpad grid.
 
     This excludes the auxiliary buttons on the edges.
+
+    `Grid` is a singleton. Any calls to the constructor will return the same
+    instance.
     """
+    the_grid = None  # type: ignore
+    initialized = False
+
+    def __new__(grid_class, *args, **kwargs):
+        if grid_class.the_grid is None:
+            grid_class.the_grid = object.__new__(grid_class)
+        return grid_class.the_grid
 
     def __init__(self, hardware: LaunchpadBase):
+        if self.__class__.initialized:
+            return
+
         self.hardware = hardware
         self.cells = []
+
         for x in range(8):
             column = []
             for y in range(8):
                 column.append(Cell(x + 1, y + 1, hardware=hardware))
             self.cells.append(column)
+
+        self.hardware.Open()
+        self.hardware.Reset()
+        self.__class__.initialized = True
 
     def __getitem__(self, index: int) -> Union[Cell, Sequence[Cell]]:
         """Get a cell or sequence of cells from the grid.
