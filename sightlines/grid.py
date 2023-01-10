@@ -2,6 +2,8 @@
 
 from sightlines.cell import Cell
 from launchpad_py.launchpad import LaunchpadBase, LaunchpadPro  # type: ignore
+from time import sleep
+from threading import Thread
 from typing import cast, Sequence, Union
 
 
@@ -36,6 +38,10 @@ class Grid:
 
         self.hardware.Open()
         self.hardware.Reset()
+
+        self.handler = Thread(target=self.handle_button_event, daemon=True)
+        self.handler.start()
+
         self.__class__.initialized = True
 
     def __getitem__(self, index: int) -> Union[Cell, Sequence[Cell]]:
@@ -78,22 +84,24 @@ class Grid:
         This handles exactly one event, if one is available. Call this method
         in a tight loop for interactive use.
         """
-        button = self.hardware.ButtonStateXY(mode="pro")
-        if button:
-            global_x, global_y, velocity = button
-            if velocity == 0:
-                # This is a button release event, we only care about presses.
-                return
+        while True:
+            button = self.hardware.ButtonStateXY(mode="pro")
+            if button:
+                global_x, global_y, velocity = button
+                if velocity == 0:
+                    # This is a button release event, we only care about presses.
+                    continue
 
-            # Map the global button coordinates to the main grid coordinates.
-            grid_x = global_x - 1
-            grid_y = global_y - 1
-            try:
-                cell = self[grid_x, grid_y]
-            except IndexError:
-                print("Button press outside of main grid, ignoring.")
-                return
-            cell.on_press()
+                # Map the global button coordinates to the main grid coordinates.
+                grid_x = global_x - 1
+                grid_y = global_y - 1
+                try:
+                    cell = self[grid_x, grid_y]
+                except IndexError:
+                    print("Button press outside of main grid, ignoring.")
+                    return
+                cell.on_press()
+            sleep(0.01)
 
 
 def smoketest():

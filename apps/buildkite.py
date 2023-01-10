@@ -40,8 +40,7 @@ def main():
     )
 
     while True:
-        grid.handle_button_event()
-        sleep(0.01)
+        sleep(1)
 
 
 if __name__ == "__main__":
