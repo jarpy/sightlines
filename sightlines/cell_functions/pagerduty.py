@@ -1,16 +1,19 @@
+import webbrowser
 from os import environ
 from sightlines.cell import Cell
 from pdpyras import APISession as PagerDutySession  # type: ignore
 from typing import Sequence
 
 pagerduty = PagerDutySession(environ["PAGERDUTY_TOKEN"])
+team_id = environ["PAGERDUTY_TEAM_ID"]
+organization = environ["PAGERDUTY_ORGANIZATION"]
 
 
 def get_incidents():
     return pagerduty.list_all(
         "incidents",
         params={
-            "team_ids[]": [environ["PAGERDUTY_TEAM_ID"]],
+            "team_ids[]": [team_id],
         },
     )
 
@@ -28,3 +31,8 @@ def pagerduty_cells(cells: Sequence[Cell]):
             cell.set_rgb(127, 0, 0)
         else:
             cell.set_rgb(0, 127, 0)
+        cell.set_on_press(
+            lambda cell: webbrowser.open(
+                f"https://{organization}.pagerduty.com/incidents"
+            )
+        )

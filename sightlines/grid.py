@@ -15,6 +15,7 @@ class Grid:
     `Grid` is a singleton. Any calls to the constructor will return the same
     instance.
     """
+
     the_grid = None  # type: ignore
     initialized = False
 
